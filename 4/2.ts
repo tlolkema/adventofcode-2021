@@ -96,16 +96,17 @@ const determineScore = (card: Card, lastNumber: number): number => {
   return sumUnMarked * lastNumber
 }
 
+let indexesWinners = new Set()
 let finished = false
 let score = 0
 
 draws.forEach((num) => {
   if (finished == false) {
     updateCards(num)
-    cards.forEach((card) => {
-      if (cardHasBingo(card) == true) {
+    cards.forEach((card, index) => {
+      if (cardHasBingo(card) == true && indexesWinners.size < cards.length) {
         score = determineScore(card, num)
-        finished = true
+        indexesWinners.add(index)
       }
     })
   }
